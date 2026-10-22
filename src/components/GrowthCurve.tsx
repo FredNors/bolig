@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { CartesianGrid, Line, LineChart, ReferenceDot, Tooltip, XAxis, YAxis } from 'recharts'
-import { formatKr, formatPct } from '../format'
+import { formatNok, formatPct } from '../format'
 import { t } from '../i18n/nb'
 import type { AppState } from '../state/types'
 import { CHART_GRID, CHART_TEXT, SERIES } from './chartColors'
@@ -19,10 +19,10 @@ export function GrowthCurve({ state }: GrowthCurveProps) {
   const data = series.map((p) => ({ years: p.years, growth: p.growth === null ? null : p.growth * 100 }))
 
   return (
-    <section className="growth">
+    <section className="growth card">
       <h2>{t.growthTitle}</h2>
       <p data-testid="growth-sentence" className="sentence">
-        {g === null ? t.growthUnreachable(inputs.years) : t.growthSentence(formatKr(startRent), formatPct(g), inputs.years)}
+        {g === null ? t.growthUnreachable(inputs.years) : t.growthSentence(formatNok(startRent), formatPct(g), inputs.years)}
       </p>
       <div className="growth-scroll">
         <LineChart width={560} height={280} data={data} margin={{ top: 12, right: 24, bottom: 24, left: 8 }}>

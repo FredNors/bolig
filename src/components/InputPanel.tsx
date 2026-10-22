@@ -1,4 +1,4 @@
-import { formatKr } from '../format'
+import { formatNok } from '../format'
 import { t } from '../i18n/nb'
 import type { Inputs, OwnCostResult, OwnershipType } from '../model/types'
 import { LIMITS, type NumericKey } from '../model/validate'
@@ -12,6 +12,7 @@ export interface InputPanelProps {
   state: AppState
   result: OwnCostResult
   dispatch: (a: Action) => void
+  onOpenAssumptions?: () => void
 }
 
 const percentSet = new Set<keyof Inputs>(PERCENT_KEYS)
@@ -41,14 +42,14 @@ const LABELS: Record<NumericKey, string> = {
 
 const toDisplay = (v: number) => Number((v * 100).toFixed(4))
 
-export function InputPanel({ state, result, dispatch }: InputPanelProps) {
+export function InputPanel({ state, result, dispatch, onOpenAssumptions }: InputPanelProps) {
   const { inputs, startRent } = state
   const isBorettslag = inputs.ownershipType === 'borettslag'
 
   const field = (key: NumericKey, slider = false) => {
     const limit = LIMITS[key]
     const isPct = percentSet.has(key)
-    const unit: Unit = isPct ? '%' : yearKeys.has(key) ? 'år' : 'kr'
+    const unit: Unit = isPct ? '%' : yearKeys.has(key) ? 'år' : 'NOK'
     const scale = isPct ? toDisplay : (v: number) => v
     return (
       <NumberField
@@ -128,7 +129,7 @@ export function InputPanel({ state, result, dispatch }: InputPanelProps) {
           min={START_RENT_LIMITS.min}
           max={START_RENT_LIMITS.max}
           step={START_RENT_LIMITS.step}
-          unit="kr"
+          unit="NOK"
           slider
           onChange={(value) => dispatch({ type: 'setStartRent', value })}
         />
@@ -140,11 +141,15 @@ export function InputPanel({ state, result, dispatch }: InputPanelProps) {
         <h2>{t.liquidityTitle}</h2>
         <dl>
           <dt>{t.liquidityPayment}</dt>
-          <dd>{formatKr(result.pmt)}</dd>
+          <dd>{formatNok(result.pmt)}</dd>
           <dt>{t.liquidityCash}</dt>
-          <dd>{formatKr(result.cashNeeded)}</dd>
+          <dd>{formatNok(result.cashNeeded)}</dd>
         </dl>
       </section>
+
+      <button type="button" className="panel-cta" onClick={onOpenAssumptions}>
+        {t.assumptionsCta}
+      </button>
     </aside>
   )
 }

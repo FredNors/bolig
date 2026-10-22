@@ -34,7 +34,7 @@ export const t = {
   taxGainLabel: 'Skattlegg gevinst ved salg (22 %)',
   equityCapped: 'Egenkapitalen er høyere enn kjøpesummen; bare kjøpesummen brukes.',
 
-  unitKr: 'kr',
+  unitNok: 'NOK',
   unitPct: '%',
   unitYears: 'år',
 
@@ -53,6 +53,8 @@ export const t = {
   oneYearWarningAction: 'Skattlegg gevinsten',
 
   breakdownTitle: 'Hva koster det å eie?',
+  breakdownHero: 'Sum eiekostnad over perioden',
+  close: 'Lukk',
   segInterest: 'Netto renter',
   segBuy: 'Kjøpskostnader',
   segSell: 'Salgskostnader',
@@ -63,12 +65,24 @@ export const t = {
 
   growthTitle: 'Nødvendig prisvekst',
   growthSentence: (rent: string, growth: string, years: number) =>
-    `Ved leie på ${rent}/mnd må boligen stige ${growth} per år ved ${years} års eietid.`,
+    `Ved leie på ${rent} per måned må boligen stige ${growth} per år ved ${years} års eietid.`,
   growthUnreachable: (years: number) =>
     `Ved ${years} års eietid finnes ingen prisvekst mellom −10 % og +20 % der kjøp og leie koster det samme.`,
   growthAxisYears: 'Eietid (år)',
   growthAxisGrowth: 'Prisvekst per år',
 
+  assumptionsCta: 'Forutsetninger og forbehold',
+  assumptionsTitle: 'Forutsetninger og forbehold',
+  howTitle: 'Slik regner vi',
+  howIntro: 'Kostnaden ved å eie boligen over eietiden sammenlignes med summen av husleie i samme periode. Alle beløp er nominelle NOK uten diskontering.',
+  howItems: [
+    'Netto renter: renter på annuitetslånet måned for måned, fratrukket skatteverdien av rentefradraget. Avdrag regnes ikke som kostnad.',
+    'Kjøpskostnader: dokumentavgift (0 ved borettslag), tinglysing og etableringsgebyr.',
+    'Salgskostnader: en andel av salgsprisen.',
+    'Drift: vedlikehold, forsikring, kommunale avgifter, eiendomsskatt og eventuelle felleskostnader, justert med inflasjon hvert år.',
+    'Tapt avkastning: det egenkapitalen og kjøpskostnadene ville gitt i avkastning etter skatt om du leide i stedet.',
+    'Verdistigning: salgspris minus kjøpesum trekkes fra kostnaden (skattlegges med 22 % hvis du velger det).',
+  ],
   caveatsTitle: 'Forbehold',
   caveats: [
     'Gevinst ved salg er skattefri bare hvis salget skjer mer enn 1 år etter kjøp og du har bodd der 12 av de siste 24 månedene.',

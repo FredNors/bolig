@@ -9,13 +9,14 @@ const d = DEFAULT_INPUTS
 test('table shows segments and total', () => {
   const r = computeOwnCost({ ...d, years: 3 })
   render(<Breakdown result={r} years={3} priceGrowth={0} />)
-  expect(screen.getByText(t.segInterest).nextSibling).toHaveTextContent('938 597 kr')
-  expect(screen.getByText(t.segRunning).nextSibling).toHaveTextContent('380 181 kr')
-  expect(screen.getByText(t.breakdownTotal).nextSibling).toHaveTextContent('1 936 750 kr')
+  expect(screen.getByText(t.segInterest).nextSibling).toHaveTextContent('938 597 NOK')
+  expect(screen.getByText(t.segRunning).nextSibling).toHaveTextContent('380 181 NOK')
+  expect(screen.getByText(t.breakdownTotal).nextSibling).toHaveTextContent('1 936 750 NOK')
 })
 
-test('heading names the selected cell', () => {
+test('heading names the selected cell and the total is shown prominently', () => {
   const r = computeOwnCost({ ...d, years: 5, priceGrowth: 0.035 })
   render(<Breakdown result={r} years={5} priceGrowth={0.035} />)
   expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent('5 år, 3,5 %')
+  expect(screen.getByTestId('breakdown-hero')).toHaveTextContent('1 305 538 NOK')
 })

@@ -1,28 +1,60 @@
+.breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
 .breakdown h2 {
-  margin: 0 0 12px;
+  margin: 0;
+  font-size: 18px;
 }
 
 .breakdown h2 .muted {
   font-weight: 400;
   color: var(--muted);
-  font-size: 0.85em;
+  font-size: 0.8em;
 }
 
-.breakdown-body {
+.flash {
+  animation: flash 700ms ease-out;
+}
+
+@keyframes flash {
+  0% {
+    background: var(--accent-soft);
+    box-shadow: 0 0 0 6px var(--accent-soft);
+  }
+  100% {
+    background: transparent;
+    box-shadow: 0 0 0 6px transparent;
+  }
+}
+
+.breakdown-hero {
   display: flex;
-  flex-wrap: wrap;
-  gap: 24px;
-  align-items: flex-start;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.breakdown-hero strong {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.breakdown-chart {
+  align-self: center;
 }
 
 .breakdown-table {
   border-collapse: collapse;
   font-size: 14px;
-  min-width: 280px;
+  width: 100%;
 }
 
 .breakdown-table td {
-  padding: 6px 8px;
+  padding: 7px 4px;
   border-bottom: 1px solid var(--border);
 }
 

@@ -7,8 +7,8 @@ export function formatInt(n: number): string {
   return plain(nb.format(Math.round(n) + 0)) // + 0 turns -0 into 0
 }
 
-export function formatKr(n: number): string {
-  return `${formatInt(n)} kr`
+export function formatNok(n: number): string {
+  return `${formatInt(n)} NOK`
 }
 
 export function formatPct(n: number, decimals = 2): string {
@@ -17,4 +17,9 @@ export function formatPct(n: number, decimals = 2): string {
     maximumFractionDigits: decimals,
   })
   return `${plain(f.format(n * 100))} %`
+}
+
+/** Whole thousands with a k suffix, for dense cells: 52216 -> "52k". */
+export function formatCompact(n: number): string {
+  return `${formatInt(Math.round(n / 1000))}k`
 }

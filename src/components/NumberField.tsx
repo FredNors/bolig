@@ -1,6 +1,6 @@
 import { useEffect, useId, useState } from 'react'
 
-export type Unit = 'kr' | '%' | 'år'
+export type Unit = 'NOK' | '%' | 'år'
 
 export interface NumberFieldProps {
   label: string

@@ -1,5 +1,5 @@
-import { useMemo } from 'react'
-import { formatInt, formatKr, formatPct } from '../format'
+import { useMemo, useState } from 'react'
+import { formatCompact, formatNok, formatPct } from '../format'
 import { t } from '../i18n/nb'
 import { breakEvenMatrix, MATRIX_GROWTHS, MATRIX_YEARS } from '../model/matrix'
 import type { Action } from '../state/reducer'
@@ -17,11 +17,14 @@ const EPS = 1e-9
 export function Matrix({ state, dispatch }: MatrixProps) {
   const { inputs, startRent } = state
   const matrix = useMemo(() => breakEvenMatrix(inputs), [inputs])
+  const [hover, setHover] = useState<{ yi: number; gi: number } | null>(null)
 
   return (
-    <section className="matrix">
-      <h2>{t.matrixTitle}</h2>
-      <p className="hint">{t.matrixHint}</p>
+    <section className="matrix card">
+      <div className="card-head">
+        <h2>{t.matrixTitle}</h2>
+        <p className="hint">{t.matrixHint}</p>
+      </div>
       {inputs.years === 1 && (
         <div role="alert" className="warning">
           <span>{t.oneYearWarning}</span>
@@ -40,8 +43,8 @@ export function Matrix({ state, dispatch }: MatrixProps) {
                 {t.matrixYearsAxis} ↓ / {t.matrixGrowthAxis} →
               </th>
               {MATRIX_GROWTHS.map((g) => (
-                <th key={g} scope="col">
-                  {formatPct(g, 1)}
+                <th key={g} scope="col" className={g === 0 ? 'zero' : undefined}>
+                  {formatPct(g, 0)}
                 </th>
               ))}
             </tr>
@@ -53,22 +56,36 @@ export function Matrix({ state, dispatch }: MatrixProps) {
                 {MATRIX_GROWTHS.map((growth, gi) => {
                   const value = matrix[yi][gi]
                   const tone = cellTone(value, startRent)
+                  const verdict = tone.kind === 'buy' ? t.cellBuy : t.cellRent
                   const selected = inputs.years === years && Math.abs(inputs.priceGrowth - growth) < EPS
+                  const hovered = hover?.yi === yi && hover?.gi === gi
                   return (
-                    <td key={growth}>
+                    <td key={growth} className={[gi >= 7 ? 'tip-left' : '', growth === 0 ? 'zero' : ''].join(' ').trim() || undefined}>
                       <button
                         type="button"
                         aria-pressed={selected}
-                        aria-label={`${years} år, ${formatPct(growth, 1)}: ${formatKr(value)}, ${tone.kind === 'buy' ? t.cellBuy : t.cellRent}`}
+                        aria-label={`${years} år, ${formatPct(growth, 1)}: ${formatNok(value)}, ${verdict}`}
                         data-kind={tone.kind}
                         style={cellStyle(tone)}
                         onClick={() => dispatch({ type: 'selectCell', years, priceGrowth: growth })}
+                        onMouseEnter={() => setHover({ yi, gi })}
+                        onMouseLeave={() => setHover(null)}
+                        onFocus={() => setHover({ yi, gi })}
+                        onBlur={() => setHover(null)}
                       >
                         <span className="marker" aria-hidden="true">
                           {tone.kind === 'buy' ? '▼' : '▲'}
                         </span>
-                        {formatInt(Math.round(value))}
+                        {formatCompact(value)}
                       </button>
+                      {hovered && (
+                        <div role="tooltip" className="cell-tip">
+                          <strong>{formatNok(value)}</strong> · {verdict}
+                          <span className="cell-tip-sub">
+                            {years} år, {formatPct(growth, 1)} prisvekst
+                          </span>
+                        </div>
+                      )}
                     </td>
                   )
                 })}
