@@ -1,0 +1,12 @@
+.growth h2 {
+  margin: 0 0 8px;
+}
+
+.sentence {
+  margin: 0 0 12px;
+  font-size: 15px;
+}
+
+.growth-scroll {
+  overflow-x: auto;
+}
