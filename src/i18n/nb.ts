@@ -1,0 +1,77 @@
+export const t = {
+  title: 'Leie eller kjøpe?',
+  subtitle: 'Hva må leien være for at kjøp og leie koster det samme?',
+
+  ownershipLabel: 'Eierform',
+  ownershipSelveier: 'Selveier',
+  ownershipBorettslag: 'Borettslag',
+
+  groupHome: 'Bolig og lån',
+  groupOneOff: 'Engangskostnader',
+  groupRunning: 'Drift',
+  groupRent: 'Leiescenario',
+
+  labelPrice: 'Kjøpesum',
+  labelEquity: 'Egenkapital',
+  labelRate: 'Effektiv lånerente',
+  labelLoanYears: 'Nedbetalingstid',
+  labelTaxRate: 'Skatteverdi av rentefradrag',
+  labelYears: 'Eietid',
+  labelPriceGrowth: 'Årlig prisvekst',
+  labelInflation: 'Inflasjon (drift)',
+  labelAltReturn: 'Avkastning på egenkapital etter skatt',
+  labelDocFeeRate: 'Dokumentavgift',
+  labelRegistrationFee: 'Tinglysing',
+  labelBankFee: 'Etableringsgebyr',
+  labelSellCostRate: 'Salgskostnader (andel av salgspris)',
+  labelMaintenanceRate: 'Vedlikehold (andel av kjøpesum per år)',
+  labelInsurance: 'Bygningsforsikring per år',
+  labelMunicipalFees: 'Kommunale avgifter per år',
+  labelPropertyTax: 'Eiendomsskatt per år',
+  labelCommonCosts: 'Felleskostnader per år',
+  labelRentGrowth: 'Årlig leieøkning',
+  labelStartRent: 'Leie per måned (år 1)',
+  taxGainLabel: 'Skattlegg gevinst ved salg (22 %)',
+
+  unitKr: 'kr',
+  unitPct: '%',
+  unitYears: 'år',
+
+  liquidityTitle: 'Likviditet',
+  liquidityPayment: 'Terminbeløp per måned',
+  liquidityCash: 'Kontantbehov ved kjøp',
+
+  matrixTitle: 'Break-even-leie per måned',
+  matrixHint: 'Grønn: kjøp er billigst ved din leie. Rød: leie er billigst. Klikk en celle for detaljer.',
+  matrixYearsAxis: 'Eietid',
+  matrixGrowthAxis: 'Årlig prisvekst',
+  oneYearWarning:
+    'Ved eietid på 1 år er gevinsten normalt skattepliktig (krever over 1 års eietid og 12 av siste 24 måneders botid).',
+  oneYearWarningAction: 'Skattlegg gevinsten',
+
+  breakdownTitle: 'Hva koster det å eie?',
+  segInterest: 'Netto renter',
+  segBuy: 'Kjøpskostnader',
+  segSell: 'Salgskostnader',
+  segRunning: 'Drift',
+  segOpportunity: 'Tapt avkastning',
+  segGain: 'Verdistigning',
+  breakdownTotal: 'Sum eiekostnad',
+
+  growthTitle: 'Nødvendig prisvekst',
+  growthSentence: (rent: string, growth: string, years: number) =>
+    `Ved leie på ${rent}/mnd må boligen stige ${growth} per år ved ${years} års eietid.`,
+  growthUnreachable: (years: number) =>
+    `Ved ${years} års eietid finnes ingen prisvekst mellom −10 % og +20 % der kjøp og leie koster det samme.`,
+  growthAxisYears: 'Eietid (år)',
+  growthAxisGrowth: 'Prisvekst per år',
+
+  caveatsTitle: 'Forbehold',
+  caveats: [
+    'Gevinst ved salg er skattefri bare hvis salget skjer mer enn 1 år etter kjøp og du har bodd der 12 av de siste 24 månedene.',
+    'Avdrag er ikke regnet som kostnad (de bygger egenkapital). Likviditetsboksen viser terminbeløp og kontantbehov separat.',
+    'Ikke medregnet: strøm, oppvarming, internett, innboforsikring, formuesskatt, fellesgjeld, renterisiko og diskontering.',
+    'Rentefradraget forutsetter full utnyttelse.',
+    'Ved borettslag: legg renter og avdrag på fellesgjeld inn i felleskostnader.',
+  ],
+} as const
