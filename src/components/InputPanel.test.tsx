@@ -106,12 +106,24 @@ test('liquidity box shows payment and cash needed', () => {
 })
 
 test('a value the reducer clamps back to the current one is not left in the field', () => {
-  const s = reduce(DEFAULT_STATE, { type: 'patch', patch: { years: 10 } })
+  const s = reduce(DEFAULT_STATE, { type: 'patch', patch: { loanYears: 40 } })
   const dispatch = vi.fn()
   const { rerender } = render(<InputPanel state={s} result={computeOwnCost(s.inputs)} dispatch={dispatch} />)
-  const years = screen.getByLabelText(t.labelYears) as HTMLInputElement
-  fireEvent.change(years, { target: { value: '99' } })
-  fireEvent.blur(years)
+  const loanYears = screen.getByLabelText(t.labelLoanYears) as HTMLInputElement
+  fireEvent.change(loanYears, { target: { value: '99' } })
+  fireEvent.blur(loanYears)
   rerender(<InputPanel state={reduce(s, dispatch.mock.calls[0][0])} result={computeOwnCost(s.inputs)} dispatch={dispatch} />)
-  expect(years.value).toBe('10')
+  expect(loanYears.value).toBe('40')
+})
+
+test('holding period and price growth are chosen in the matrix, not the panel', () => {
+  render(<InputPanel state={DEFAULT_STATE} result={computeOwnCost(d)} dispatch={() => {}} />)
+  expect(screen.queryByLabelText(t.labelYears)).toBeNull()
+  expect(screen.queryByLabelText(t.labelPriceGrowth)).toBeNull()
+})
+
+test('property tax field explains why it defaults to zero', () => {
+  render(<InputPanel state={DEFAULT_STATE} result={computeOwnCost(d)} dispatch={() => {}} />)
+  const hint = screen.getByText(t.propertyTaxHint)
+  expect(hint.closest('.field')).toBe(screen.getByLabelText(t.labelPropertyTax).closest('.field'))
 })

@@ -28,6 +28,7 @@ export const t = {
   labelInsurance: 'Bygningsforsikring per år',
   labelMunicipalFees: 'Kommunale avgifter per år',
   labelPropertyTax: 'Eiendomsskatt per år',
+  propertyTaxHint: 'Bærum har ikke eiendomsskatt (2026). Tast årlig beløp hvis kommunen har det.',
   labelCommonCosts: 'Felleskostnader per år',
   labelRentGrowth: 'Årlig leieøkning',
   labelStartRent: 'Leie per måned (år 1)',
