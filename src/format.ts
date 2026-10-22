@@ -4,7 +4,7 @@ const nb = new Intl.NumberFormat('nb-NO', { maximumFractionDigits: 0 })
 const plain = (s: string) => s.replace(/[  ]/g, ' ')
 
 export function formatInt(n: number): string {
-  return plain(nb.format(Math.round(n)))
+  return plain(nb.format(Math.round(n) + 0)) // + 0 turns -0 into 0
 }
 
 export function formatKr(n: number): string {
