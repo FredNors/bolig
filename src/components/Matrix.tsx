@@ -59,11 +59,14 @@ export function Matrix({ state, dispatch }: MatrixProps) {
                       <button
                         type="button"
                         aria-pressed={selected}
-                        aria-label={`${years} år, ${formatPct(growth, 1)}: ${formatKr(value)}`}
+                        aria-label={`${years} år, ${formatPct(growth, 1)}: ${formatKr(value)}, ${tone.kind === 'buy' ? t.cellBuy : t.cellRent}`}
                         data-kind={tone.kind}
                         style={cellStyle(tone)}
                         onClick={() => dispatch({ type: 'selectCell', years, priceGrowth: growth })}
                       >
+                        <span className="marker" aria-hidden="true">
+                          {tone.kind === 'buy' ? '▼' : '▲'}
+                        </span>
                         {formatInt(Math.round(value))}
                       </button>
                     </td>

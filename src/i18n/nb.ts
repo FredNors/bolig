@@ -43,7 +43,9 @@ export const t = {
   liquidityCash: 'Kontantbehov ved kjøp',
 
   matrixTitle: 'Break-even-leie per måned',
-  matrixHint: 'Grønn: kjøp er billigst ved din leie. Rød: leie er billigst. Klikk en celle for detaljer.',
+  matrixHint: 'Grønn ▼: kjøp er billigst ved din leie. Rød ▲: leie er billigst. Klikk en celle for detaljer.',
+  cellBuy: 'kjøp billigst',
+  cellRent: 'leie billigst',
   matrixYearsAxis: 'Eietid',
   matrixGrowthAxis: 'Årlig prisvekst',
   oneYearWarning:

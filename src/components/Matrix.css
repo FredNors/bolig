@@ -77,3 +77,10 @@
   border-color: var(--text);
   font-weight: 700;
 }
+
+.matrix td button .marker {
+  font-size: 8px;
+  margin-right: 3px;
+  opacity: 0.7;
+  vertical-align: middle;
+}
