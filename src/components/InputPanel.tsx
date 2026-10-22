@@ -92,7 +92,6 @@ export function InputPanel({ state, result, dispatch, onOpenAssumptions }: Input
         {field('rate', true)}
         {field('loanYears')}
         {field('taxRate')}
-        {field('years', true)}
       </fieldset>
 
       <fieldset>
