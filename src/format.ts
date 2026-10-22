@@ -18,3 +18,8 @@ export function formatPct(n: number, decimals = 2): string {
   })
   return `${plain(f.format(n * 100))} %`
 }
+
+/** Whole thousands with a k suffix, for dense cells: 52216 -> "52k". */
+export function formatCompact(n: number): string {
+  return `${formatInt(Math.round(n / 1000))}k`
+}

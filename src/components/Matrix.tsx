@@ -1,5 +1,5 @@
-import { useMemo } from 'react'
-import { formatInt, formatNok, formatPct } from '../format'
+import { useMemo, useState } from 'react'
+import { formatCompact, formatNok, formatPct } from '../format'
 import { t } from '../i18n/nb'
 import { breakEvenMatrix, MATRIX_GROWTHS, MATRIX_YEARS } from '../model/matrix'
 import type { Action } from '../state/reducer'
@@ -17,6 +17,7 @@ const EPS = 1e-9
 export function Matrix({ state, dispatch }: MatrixProps) {
   const { inputs, startRent } = state
   const matrix = useMemo(() => breakEvenMatrix(inputs), [inputs])
+  const [hover, setHover] = useState<{ yi: number; gi: number } | null>(null)
 
   return (
     <section className="matrix card">
@@ -55,22 +56,36 @@ export function Matrix({ state, dispatch }: MatrixProps) {
                 {MATRIX_GROWTHS.map((growth, gi) => {
                   const value = matrix[yi][gi]
                   const tone = cellTone(value, startRent)
+                  const verdict = tone.kind === 'buy' ? t.cellBuy : t.cellRent
                   const selected = inputs.years === years && Math.abs(inputs.priceGrowth - growth) < EPS
+                  const hovered = hover?.yi === yi && hover?.gi === gi
                   return (
-                    <td key={growth}>
+                    <td key={growth} className={gi >= 7 ? 'tip-left' : undefined}>
                       <button
                         type="button"
                         aria-pressed={selected}
-                        aria-label={`${years} år, ${formatPct(growth, 1)}: ${formatNok(value)}, ${tone.kind === 'buy' ? t.cellBuy : t.cellRent}`}
+                        aria-label={`${years} år, ${formatPct(growth, 1)}: ${formatNok(value)}, ${verdict}`}
                         data-kind={tone.kind}
                         style={cellStyle(tone)}
                         onClick={() => dispatch({ type: 'selectCell', years, priceGrowth: growth })}
+                        onMouseEnter={() => setHover({ yi, gi })}
+                        onMouseLeave={() => setHover(null)}
+                        onFocus={() => setHover({ yi, gi })}
+                        onBlur={() => setHover(null)}
                       >
                         <span className="marker" aria-hidden="true">
                           {tone.kind === 'buy' ? '▼' : '▲'}
                         </span>
-                        {formatInt(Math.round(value))}
+                        {formatCompact(value)}
                       </button>
+                      {hovered && (
+                        <div role="tooltip" className="cell-tip">
+                          <strong>{formatNok(value)}</strong> · {verdict}
+                          <span className="cell-tip-sub">
+                            {years} år, {formatPct(growth, 1)} prisvekst
+                          </span>
+                        </div>
+                      )}
                     </td>
                   )
                 })}

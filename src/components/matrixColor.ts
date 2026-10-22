@@ -15,10 +15,20 @@ export function cellTone(breakEven: number, startRent: number): CellTone {
   return { kind, intensity }
 }
 
-const GREEN = '22, 163, 74'
-const RED = '220, 38, 38'
+type Rgb = [number, number, number]
+const RAMP: Record<CellKind, [Rgb, Rgb]> = {
+  buy: [[232, 245, 236], [21, 128, 61]],
+  rent: [[254, 226, 226], [220, 38, 38]],
+}
 
+const mix = (a: Rgb, b: Rgb, f: number): string =>
+  `rgb(${a.map((v, i) => Math.round(v + (b[i] - v) * f)).join(', ')})`
+
+/** Pale at low intensity, saturated at high; text flips to white once the fill is dark. */
 export function cellStyle(tone: CellTone): CSSProperties {
-  const alpha = 0.15 + 0.6 * tone.intensity
-  return { background: `rgba(${tone.kind === 'buy' ? GREEN : RED}, ${alpha.toFixed(3)})` }
+  const [pale, strong] = RAMP[tone.kind]
+  return {
+    background: mix(pale, strong, tone.intensity),
+    color: tone.intensity > 0.6 ? '#fff' : 'var(--text)',
+  }
 }

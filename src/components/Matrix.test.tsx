@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { Matrix } from './Matrix'
 import { DEFAULT_STATE } from '../state/types'
@@ -11,7 +11,23 @@ test('renders 10 x 11 cells and marks the selected one', () => {
     screen.getAllByRole('button', { pressed: false }).length +
     screen.getAllByRole('button', { pressed: true }).length
   expect(cells).toBe(110)
-  expect(screen.getByRole('button', { pressed: true })).toHaveTextContent('52 216')
+  expect(screen.getByRole('button', { pressed: true })).toHaveTextContent('52k')
+})
+
+test('hovering a cell shows a tooltip with the exact value and verdict', async () => {
+  render(<Matrix state={DEFAULT_STATE} dispatch={() => {}} />)
+  expect(screen.queryByRole('tooltip')).toBeNull()
+  await userEvent.hover(screen.getByRole('button', { pressed: true }))
+  expect(screen.getByRole('tooltip')).toHaveTextContent('52 216 NOK · leie billigst')
+  await userEvent.unhover(screen.getByRole('button', { pressed: true }))
+  expect(screen.queryByRole('tooltip')).toBeNull()
+})
+
+test('focusing a cell shows the tooltip too', () => {
+  render(<Matrix state={DEFAULT_STATE} dispatch={() => {}} />)
+  const cell = screen.getByRole('button', { name: /^5 år, 3,5 %/ })
+  fireEvent.focus(cell)
+  expect(screen.getByRole('tooltip')).toHaveTextContent('20 492 NOK · kjøp billigst')
 })
 
 test('clicking a cell dispatches selectCell', async () => {

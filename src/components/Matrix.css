@@ -1,4 +1,3 @@
-
 .warning {
   display: flex;
   flex-wrap: wrap;
@@ -25,12 +24,14 @@
 
 .matrix-scroll {
   overflow-x: auto;
+  padding-bottom: 4px;
 }
 
 .matrix table {
   border-collapse: separate;
   border-spacing: 3px;
-  font-size: 13px;
+  width: 100%;
+  font-size: 12px;
   font-variant-numeric: tabular-nums;
 }
 
@@ -38,43 +39,85 @@
   font-weight: 500;
   color: var(--muted);
   white-space: nowrap;
-  padding: 2px 6px;
+  padding: 0 4px 2px;
+  font-size: 11px;
 }
 
 .matrix th.corner {
   text-align: left;
-  font-size: 11px;
+  font-size: 10px;
 }
 
 .matrix th[scope='row'] {
   text-align: right;
+  padding-right: 8px;
 }
 
 .matrix td {
   padding: 0;
+  position: relative;
+  min-width: 48px;
 }
 
 .matrix td button {
   width: 100%;
-  min-width: 82px;
-  padding: 7px 6px;
-  white-space: nowrap;
-  border: 2px solid transparent;
+  height: 34px;
+  padding: 0 4px;
+  border: 0;
   border-radius: 6px;
-  color: var(--text);
   cursor: pointer;
   font: inherit;
+  font-size: 11px;
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  transition: transform 80ms ease, box-shadow 80ms ease;
+}
+
+.matrix td button:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
 }
 
 .matrix td button[aria-pressed='true'] {
-  border-color: var(--text);
+  box-shadow: inset 0 0 0 2px var(--text);
   font-weight: 700;
 }
 
 .matrix td button .marker {
-  font-size: 8px;
-  margin-right: 3px;
-  opacity: 0.7;
+  font-size: 7px;
+  margin-right: 2px;
+  opacity: 0.75;
   vertical-align: middle;
+}
+
+.cell-tip {
+  position: absolute;
+  z-index: 5;
+  left: 0;
+  top: calc(100% + 6px);
+  min-width: 170px;
+  padding: 8px 10px;
+  background: var(--text);
+  color: #fff;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-lg);
+  font-size: 12px;
+  line-height: 1.35;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.cell-tip strong {
+  font-weight: 600;
+}
+
+.cell-tip-sub {
+  display: block;
+  opacity: 0.75;
+  font-size: 11px;
+}
+
+.matrix td.tip-left .cell-tip {
+  left: auto;
+  right: 0;
 }
