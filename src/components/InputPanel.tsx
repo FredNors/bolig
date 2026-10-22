@@ -46,7 +46,7 @@ export function InputPanel({ state, result, dispatch, onOpenAssumptions }: Input
   const { inputs, startRent } = state
   const isBorettslag = inputs.ownershipType === 'borettslag'
 
-  const field = (key: NumericKey, slider = false) => {
+  const field = (key: NumericKey, slider = false, hint?: string) => {
     const limit = LIMITS[key]
     const isPct = percentSet.has(key)
     const unit: Unit = isPct ? '%' : yearKeys.has(key) ? 'år' : 'NOK'
@@ -61,6 +61,7 @@ export function InputPanel({ state, result, dispatch, onOpenAssumptions }: Input
         step={scale(limit.step)}
         unit={unit}
         slider={slider}
+        hint={hint}
         onChange={(v) => dispatch({ type: 'patch', patch: { [key]: isPct ? v / 100 : v } })}
       />
     )
@@ -107,7 +108,7 @@ export function InputPanel({ state, result, dispatch, onOpenAssumptions }: Input
         {field('maintenanceRate')}
         {field('insurance')}
         {field('municipalFees')}
-        {field('propertyTax')}
+        {field('propertyTax', false, t.propertyTaxHint)}
         {isBorettslag && field('commonCosts')}
         {field('inflation')}
         <label className="checkbox">

@@ -121,3 +121,9 @@ test('holding period and price growth are chosen in the matrix, not the panel', 
   expect(screen.queryByLabelText(t.labelYears)).toBeNull()
   expect(screen.queryByLabelText(t.labelPriceGrowth)).toBeNull()
 })
+
+test('property tax field explains why it defaults to zero', () => {
+  render(<InputPanel state={DEFAULT_STATE} result={computeOwnCost(d)} dispatch={() => {}} />)
+  const hint = screen.getByText(t.propertyTaxHint)
+  expect(hint.closest('.field')).toBe(screen.getByLabelText(t.labelPropertyTax).closest('.field'))
+})

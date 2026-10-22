@@ -11,6 +11,7 @@ export interface NumberFieldProps {
   unit: Unit
   onChange: (value: number) => void
   slider?: boolean
+  hint?: string
 }
 
 const parse = (raw: string): number | null => {
@@ -23,7 +24,7 @@ const parse = (raw: string): number | null => {
  * The text input keeps a local draft and commits on blur or Enter, so intermediate
  * keystrokes never reach the model; the slider commits on every change.
  */
-export function NumberField({ label, value, min, max, step, unit, onChange, slider }: NumberFieldProps) {
+export function NumberField({ label, value, min, max, step, unit, onChange, slider, hint }: NumberFieldProps) {
   const id = useId()
   const [draft, setDraft] = useState(String(value))
   useEffect(() => setDraft(String(value)), [value])
@@ -55,6 +56,7 @@ export function NumberField({ label, value, min, max, step, unit, onChange, slid
         />
         <span className="unit">{unit}</span>
       </div>
+      {hint && <p className="field-note">{hint}</p>}
       {slider && (
         <input
           type="range"
