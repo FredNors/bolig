@@ -1,0 +1,79 @@
+.matrix h2 {
+  margin: 0 0 4px;
+}
+
+.hint {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.warning {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  align-items: center;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  border: 1px solid #f59e0b;
+  background: #fffbeb;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.warning button {
+  padding: 6px 10px;
+  border: 1px solid #f59e0b;
+  background: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  font: inherit;
+}
+
+.matrix-scroll {
+  overflow-x: auto;
+}
+
+.matrix table {
+  border-collapse: separate;
+  border-spacing: 3px;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.matrix th {
+  font-weight: 500;
+  color: var(--muted);
+  white-space: nowrap;
+  padding: 2px 6px;
+}
+
+.matrix th.corner {
+  text-align: left;
+  font-size: 11px;
+}
+
+.matrix th[scope='row'] {
+  text-align: right;
+}
+
+.matrix td {
+  padding: 0;
+}
+
+.matrix td button {
+  width: 100%;
+  min-width: 64px;
+  padding: 7px 6px;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  color: var(--text);
+  cursor: pointer;
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+}
+
+.matrix td button[aria-pressed='true'] {
+  border-color: var(--text);
+  font-weight: 700;
+}
