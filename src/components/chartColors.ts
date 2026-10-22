@@ -1,4 +1,4 @@
-/** Categorical slots 1–6 (validated with the dataviz palette script, light surface). */
-export const SERIES = ['#2a78d6', '#eb6834', '#1baf7a', '#eda100', '#e87ba4', '#008300'] as const
-export const CHART_TEXT = '#5b5a55'
-export const CHART_GRID = '#e5e4df'
+/** Categorical series, teal first to match the theme accent. Validated with the dataviz palette script (light surface, all checks pass). */
+export const SERIES = ['#0d9488', '#eb6834', '#2a78d6', '#eda100', '#e87ba4', '#6250d6'] as const
+export const CHART_TEXT = '#5f6b7a'
+export const CHART_GRID = '#e1e5eb'
