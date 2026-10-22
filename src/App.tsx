@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react'
 import { Breakdown } from './components/Breakdown'
-import { Caveats } from './components/Caveats'
+import { AssumptionsDialog } from './components/AssumptionsDialog'
 import { GrowthCurve } from './components/GrowthCurve'
 import { InputPanel } from './components/InputPanel'
 import { Matrix } from './components/Matrix'
@@ -15,6 +15,8 @@ export default function App() {
   const result = useMemo(() => computeOwnCost(state.inputs), [state.inputs])
   const [panelOpen, setPanelOpen] = useState(false)
   const closePanel = useCallback(() => setPanelOpen(false), [])
+  const [assumptionsOpen, setAssumptionsOpen] = useState(false)
+  const closeAssumptions = useCallback(() => setAssumptionsOpen(false), [])
 
   const dispatchFromMatrix = (a: Action) => {
     dispatch(a)
@@ -28,16 +30,16 @@ export default function App() {
         <p className="subtitle">{t.subtitle}</p>
       </header>
       <div className="layout">
-        <InputPanel state={state} result={result} dispatch={dispatch} />
+        <InputPanel state={state} result={result} dispatch={dispatch} onOpenAssumptions={() => setAssumptionsOpen(true)} />
         <main className="views">
           <Matrix state={state} dispatch={dispatchFromMatrix} />
           <GrowthCurve state={state} />
-          <Caveats />
         </main>
       </div>
       <SidePanel open={panelOpen} title={t.breakdownTitle} onClose={closePanel}>
         <Breakdown result={result} years={state.inputs.years} priceGrowth={state.inputs.priceGrowth} />
       </SidePanel>
+      <AssumptionsDialog open={assumptionsOpen} onClose={closeAssumptions} />
     </div>
   )
 }

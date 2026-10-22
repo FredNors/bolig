@@ -12,6 +12,7 @@ export interface InputPanelProps {
   state: AppState
   result: OwnCostResult
   dispatch: (a: Action) => void
+  onOpenAssumptions?: () => void
 }
 
 const percentSet = new Set<keyof Inputs>(PERCENT_KEYS)
@@ -41,7 +42,7 @@ const LABELS: Record<NumericKey, string> = {
 
 const toDisplay = (v: number) => Number((v * 100).toFixed(4))
 
-export function InputPanel({ state, result, dispatch }: InputPanelProps) {
+export function InputPanel({ state, result, dispatch, onOpenAssumptions }: InputPanelProps) {
   const { inputs, startRent } = state
   const isBorettslag = inputs.ownershipType === 'borettslag'
 
@@ -145,6 +146,10 @@ export function InputPanel({ state, result, dispatch }: InputPanelProps) {
           <dd>{formatNok(result.cashNeeded)}</dd>
         </dl>
       </section>
+
+      <button type="button" className="panel-cta" onClick={onOpenAssumptions}>
+        {t.assumptionsCta}
+      </button>
     </aside>
   )
 }
