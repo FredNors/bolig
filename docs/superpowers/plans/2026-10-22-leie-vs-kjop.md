@@ -360,7 +360,7 @@ test('equity cannot exceed price', () => {
 test('defaults serialize to empty query', () => expect(serialize(DEFAULT_STATE).toString()).toBe(''))
 test('non-default fields serialize as percent / amounts', () => {
   const s = { inputs: { ...d, price: 7500000, rate: 0.055, ownershipType: 'borettslag', taxGain: true }, startRent: 30000 }
-  expect(serialize(s).toString()).toBe('price=7500000&rate=5.5&type=borettslag&taxGain=1&startRent=30000')
+  expect(serialize(s).toString()).toBe('type=borettslag&price=7500000&rate=5.5&taxGain=1&startRent=30000')
 })
 test('round trip', () => {
   const s = { inputs: { ...d, years: 5, priceGrowth: 0.025, commonCosts: 48000 }, startRent: 40000 }
@@ -380,7 +380,7 @@ Expected: FAIL.
 
 - [ ] **Step 3: Implement `validate.ts`, `state/types.ts`, `urlState.ts`**
 
-Serialize iterates `Object.keys(DEFAULT_INPUTS)` in declaration order, then `startRent`, so output order is deterministic for the test above.
+Serialize iterates `Object.keys(DEFAULT_INPUTS)` in declaration order (declare `DEFAULT_INPUTS` in the spec table's order, `ownershipType` first), then `startRent`, so output order matches the test above.
 
 - [ ] **Step 4: Run tests to verify they pass**
 
@@ -473,7 +473,7 @@ export function InputPanel(props: InputPanelProps): JSX.Element
 // NumberField: label, value (display units), min/max/step (display units), unit ('kr' | '%' | 'år'), onChange(valueInDisplayUnits), slider?: boolean
 ```
 
-Layout: segmented toggle (two `<button role="radio">` inside `role="radiogroup"`), then four `<fieldset>` groups with `<legend>` from `t.group*`. Fields in order per group: Bolig og lån: price*, equity*, rate*, loanYears, taxRate, years*; Engangskostnader: docFeeRate (hidden for borettslag), registrationFee, bankFee, sellCostRate; Drift: maintenanceRate, insurance, municipalFees, propertyTax, commonCosts (only for borettslag), inflation, taxGain checkbox; Leiescenario: startRent*, rentGrowth, altReturn. `*` = also renders a slider. Percent fields convert decimal ↔ percent at the `NumberField` boundary. Liquidity box at the bottom: `t.liquidityPayment` → `formatKr(result.pmt)`, `t.liquidityCash` → `formatKr(result.cashNeeded)`.
+Layout: segmented toggle (two `<button role="radio">` inside `role="radiogroup"`), then four `<fieldset>` groups with `<legend>` from `t.group*`. Fields in order per group: Bolig og lån: price*, equity*, rate*, loanYears, taxRate, years*; Engangskostnader: docFeeRate (hidden for borettslag), registrationFee, bankFee, sellCostRate; Drift: maintenanceRate, insurance, municipalFees, propertyTax, commonCosts (only for borettslag), inflation, taxGain checkbox; Leiescenario: startRent*, rentGrowth, altReturn. `*` = also renders a slider. Percent fields convert decimal ↔ percent at the `NumberField` boundary; display value is `Number((value * 100).toFixed(4))` so 0.06 shows as `6`, and input goes back as `parsed / 100`. Liquidity box at the bottom: `t.liquidityPayment` → `formatKr(result.pmt)`, `t.liquidityCash` → `formatKr(result.cashNeeded)`.
 
 - [ ] **Step 1: Write the failing tests**
 
