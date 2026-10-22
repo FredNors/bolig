@@ -19,9 +19,11 @@ export function Matrix({ state, dispatch }: MatrixProps) {
   const matrix = useMemo(() => breakEvenMatrix(inputs), [inputs])
 
   return (
-    <section className="matrix">
-      <h2>{t.matrixTitle}</h2>
-      <p className="hint">{t.matrixHint}</p>
+    <section className="matrix card">
+      <div className="card-head">
+        <h2>{t.matrixTitle}</h2>
+        <p className="hint">{t.matrixHint}</p>
+      </div>
       {inputs.years === 1 && (
         <div role="alert" className="warning">
           <span>{t.oneYearWarning}</span>

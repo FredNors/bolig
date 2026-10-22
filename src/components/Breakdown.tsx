@@ -19,7 +19,7 @@ export function Breakdown({ result, years, priceGrowth }: BreakdownProps) {
   const labelOf = Object.fromEntries(segments.map((s) => [s.key, s.label]))
 
   return (
-    <section className="breakdown">
+    <section className="breakdown card">
       <h2>
         {t.breakdownTitle} <span className="muted">{years} år, {formatPct(priceGrowth, 1)}</span>
       </h2>

@@ -19,7 +19,7 @@ export function GrowthCurve({ state }: GrowthCurveProps) {
   const data = series.map((p) => ({ years: p.years, growth: p.growth === null ? null : p.growth * 100 }))
 
   return (
-    <section className="growth">
+    <section className="growth card">
       <h2>{t.growthTitle}</h2>
       <p data-testid="growth-sentence" className="sentence">
         {g === null ? t.growthUnreachable(inputs.years) : t.growthSentence(formatNok(startRent), formatPct(g), inputs.years)}
