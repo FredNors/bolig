@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import App from './App'
 import { t } from './i18n/nb'
@@ -24,7 +24,7 @@ test('clicking a cell updates the breakdown', async () => {
   render(<App />)
   await userEvent.click(screen.getByRole('button', { name: /^5 år, 3,5 %/ }))
   expect(screen.getByText(t.breakdownTotal).nextSibling).toHaveTextContent('1 305 538 kr')
-  expect(window.location.search).toBe('?years=5&priceGrowth=3.5')
+  await waitFor(() => expect(window.location.search).toBe('?years=5&priceGrowth=3.5'))
 })
 
 test('caveats are listed', () => {
