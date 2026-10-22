@@ -44,7 +44,7 @@ test('no warning at 3 years', () => {
 
 test('cell labels state the verdict in words, not colour alone', () => {
   render(<Matrix state={DEFAULT_STATE} dispatch={() => {}} />)
-  expect(screen.getByRole('button', { pressed: true })).toHaveAccessibleName(`3 år, 0,0 %: 52 216 kr, ${t.cellRent}`)
+  expect(screen.getByRole('button', { pressed: true })).toHaveAccessibleName(`3 år, 0,0 %: 52 216 NOK, ${t.cellRent}`)
   expect(screen.getByRole('button', { name: new RegExp(`^5 år, 3,5 %.*${t.cellBuy}$`) })).toBeInTheDocument()
 })
 

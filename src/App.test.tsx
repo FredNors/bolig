@@ -23,7 +23,7 @@ test('changing startRent recolours the selected cell', () => {
 test('clicking a cell updates the breakdown', async () => {
   render(<App />)
   await userEvent.click(screen.getByRole('button', { name: /^5 år, 3,5 %/ }))
-  expect(screen.getByText(t.breakdownTotal).nextSibling).toHaveTextContent('1 305 538 kr')
+  expect(screen.getByText(t.breakdownTotal).nextSibling).toHaveTextContent('1 305 538 NOK')
   await waitFor(() => expect(window.location.search).toBe('?years=5&priceGrowth=3.5'))
 })
 

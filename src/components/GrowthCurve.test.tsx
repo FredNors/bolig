@@ -5,7 +5,7 @@ import { t } from '../i18n/nb'
 
 test('sentence for reachable growth', () => {
   render(<GrowthCurve state={DEFAULT_STATE} />)
-  expect(screen.getByTestId('growth-sentence')).toHaveTextContent(t.growthSentence('35 000 kr', '2,36 %', 3))
+  expect(screen.getByTestId('growth-sentence')).toHaveTextContent(t.growthSentence('35 000 NOK', '2,36 %', 3))
 })
 
 test('sentence for unreachable growth', () => {

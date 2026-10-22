@@ -34,7 +34,7 @@ export const t = {
   taxGainLabel: 'Skattlegg gevinst ved salg (22 %)',
   equityCapped: 'Egenkapitalen er høyere enn kjøpesummen; bare kjøpesummen brukes.',
 
-  unitKr: 'kr',
+  unitNok: 'NOK',
   unitPct: '%',
   unitYears: 'år',
 
@@ -63,7 +63,7 @@ export const t = {
 
   growthTitle: 'Nødvendig prisvekst',
   growthSentence: (rent: string, growth: string, years: number) =>
-    `Ved leie på ${rent}/mnd må boligen stige ${growth} per år ved ${years} års eietid.`,
+    `Ved leie på ${rent} per måned må boligen stige ${growth} per år ved ${years} års eietid.`,
   growthUnreachable: (years: number) =>
     `Ved ${years} års eietid finnes ingen prisvekst mellom −10 % og +20 % der kjøp og leie koster det samme.`,
   growthAxisYears: 'Eietid (år)',

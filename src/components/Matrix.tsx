@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { formatInt, formatKr, formatPct } from '../format'
+import { formatInt, formatNok, formatPct } from '../format'
 import { t } from '../i18n/nb'
 import { breakEvenMatrix, MATRIX_GROWTHS, MATRIX_YEARS } from '../model/matrix'
 import type { Action } from '../state/reducer'
@@ -59,7 +59,7 @@ export function Matrix({ state, dispatch }: MatrixProps) {
                       <button
                         type="button"
                         aria-pressed={selected}
-                        aria-label={`${years} år, ${formatPct(growth, 1)}: ${formatKr(value)}, ${tone.kind === 'buy' ? t.cellBuy : t.cellRent}`}
+                        aria-label={`${years} år, ${formatPct(growth, 1)}: ${formatNok(value)}, ${tone.kind === 'buy' ? t.cellBuy : t.cellRent}`}
                         data-kind={tone.kind}
                         style={cellStyle(tone)}
                         onClick={() => dispatch({ type: 'selectCell', years, priceGrowth: growth })}

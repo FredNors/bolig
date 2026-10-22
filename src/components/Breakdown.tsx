@@ -1,5 +1,5 @@
 import { Bar, BarChart, ReferenceLine, Tooltip, XAxis, YAxis } from 'recharts'
-import { formatInt, formatKr, formatPct } from '../format'
+import { formatInt, formatNok, formatPct } from '../format'
 import { t } from '../i18n/nb'
 import type { OwnCostResult } from '../model/types'
 import { breakdownSegments } from './breakdownData'
@@ -35,7 +35,7 @@ export function Breakdown({ result, years, priceGrowth }: BreakdownProps) {
           />
           <ReferenceLine y={0} stroke={CHART_TEXT} />
           <Tooltip
-            formatter={(value, name) => [formatKr(Number(value)), labelOf[String(name)] ?? String(name)]}
+            formatter={(value, name) => [formatNok(Number(value)), labelOf[String(name)] ?? String(name)]}
             cursor={{ fill: 'rgba(0,0,0,0.04)' }}
           />
           {segments.map((s, i) => (
@@ -50,12 +50,12 @@ export function Breakdown({ result, years, priceGrowth }: BreakdownProps) {
                   <span className="swatch" style={{ background: SERIES[i] }} aria-hidden="true" />
                   {s.label}
                 </td>
-                <td className="num">{formatKr(s.value)}</td>
+                <td className="num">{formatNok(s.value)}</td>
               </tr>
             ))}
             <tr className="total">
               <td>{t.breakdownTotal}</td>
-              <td className="num">{formatKr(result.ownCost)}</td>
+              <td className="num">{formatNok(result.ownCost)}</td>
             </tr>
           </tbody>
         </table>

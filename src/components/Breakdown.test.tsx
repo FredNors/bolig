@@ -9,9 +9,9 @@ const d = DEFAULT_INPUTS
 test('table shows segments and total', () => {
   const r = computeOwnCost({ ...d, years: 3 })
   render(<Breakdown result={r} years={3} priceGrowth={0} />)
-  expect(screen.getByText(t.segInterest).nextSibling).toHaveTextContent('938 597 kr')
-  expect(screen.getByText(t.segRunning).nextSibling).toHaveTextContent('380 181 kr')
-  expect(screen.getByText(t.breakdownTotal).nextSibling).toHaveTextContent('1 936 750 kr')
+  expect(screen.getByText(t.segInterest).nextSibling).toHaveTextContent('938 597 NOK')
+  expect(screen.getByText(t.segRunning).nextSibling).toHaveTextContent('380 181 NOK')
+  expect(screen.getByText(t.breakdownTotal).nextSibling).toHaveTextContent('1 936 750 NOK')
 })
 
 test('heading names the selected cell', () => {

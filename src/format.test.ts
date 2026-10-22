@@ -1,9 +1,9 @@
-import { formatInt, formatKr, formatPct } from './format'
+import { formatInt, formatNok, formatPct } from './format'
 
-test('formatKr uses space separator and kr', () => expect(formatKr(52216.4)).toBe('52 216 kr'))
-test('formatKr rounds negatives', () => expect(formatKr(-1689177.2)).toBe('−1 689 177 kr'))
+test('formatNok uses space separator and NOK', () => expect(formatNok(52216.4)).toBe('52 216 NOK'))
+test('formatNok rounds negatives', () => expect(formatNok(-1689177.2)).toBe('−1 689 177 NOK'))
 test('formatPct uses comma', () => expect(formatPct(0.0236)).toBe('2,36 %'))
 test('formatPct with one decimal', () => expect(formatPct(0.035, 1)).toBe('3,5 %'))
 test('formatInt', () => expect(formatInt(1234567)).toBe('1 234 567'))
-test('formatKr never shows negative zero', () => expect(formatKr(-0)).toBe('0 kr'))
-test('formatKr rounds tiny negatives to plain zero', () => expect(formatKr(-0.3)).toBe('0 kr'))
+test('formatNok never shows negative zero', () => expect(formatNok(-0)).toBe('0 NOK'))
+test('formatNok rounds tiny negatives to plain zero', () => expect(formatNok(-0.3)).toBe('0 NOK'))

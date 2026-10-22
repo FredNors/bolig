@@ -7,8 +7,8 @@ export function formatInt(n: number): string {
   return plain(nb.format(Math.round(n) + 0)) // + 0 turns -0 into 0
 }
 
-export function formatKr(n: number): string {
-  return `${formatInt(n)} kr`
+export function formatNok(n: number): string {
+  return `${formatInt(n)} NOK`
 }
 
 export function formatPct(n: number, decimals = 2): string {

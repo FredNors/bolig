@@ -101,8 +101,8 @@ test('taxGain checkbox dispatches patch', async () => {
 
 test('liquidity box shows payment and cash needed', () => {
   render(<InputPanel state={DEFAULT_STATE} result={computeOwnCost(d)} dispatch={() => {}} />)
-  expect(screen.getByText('41 256 kr')).toBeInTheDocument()
-  expect(screen.getByText('2 231 090 kr')).toBeInTheDocument()
+  expect(screen.getByText('41 256 NOK')).toBeInTheDocument()
+  expect(screen.getByText('2 231 090 NOK')).toBeInTheDocument()
 })
 
 test('a value the reducer clamps back to the current one is not left in the field', () => {
