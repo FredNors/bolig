@@ -14,8 +14,9 @@ test('table shows segments and total', () => {
   expect(screen.getByText(t.breakdownTotal).nextSibling).toHaveTextContent('1 936 750 NOK')
 })
 
-test('heading names the selected cell', () => {
+test('heading names the selected cell and the total is shown prominently', () => {
   const r = computeOwnCost({ ...d, years: 5, priceGrowth: 0.035 })
   render(<Breakdown result={r} years={5} priceGrowth={0.035} />)
   expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent('5 år, 3,5 %')
+  expect(screen.getByTestId('breakdown-hero')).toHaveTextContent('1 305 538 NOK')
 })

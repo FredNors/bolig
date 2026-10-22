@@ -53,6 +53,8 @@ export const t = {
   oneYearWarningAction: 'Skattlegg gevinsten',
 
   breakdownTitle: 'Hva koster det å eie?',
+  breakdownHero: 'Sum eiekostnad over perioden',
+  close: 'Lukk',
   segInterest: 'Netto renter',
   segBuy: 'Kjøpskostnader',
   segSell: 'Salgskostnader',
