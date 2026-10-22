@@ -1,0 +1,48 @@
+.breakdown h2 {
+  margin: 0 0 12px;
+}
+
+.breakdown h2 .muted {
+  font-weight: 400;
+  color: var(--muted);
+  font-size: 0.85em;
+}
+
+.breakdown-body {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.breakdown-table {
+  border-collapse: collapse;
+  font-size: 14px;
+  min-width: 280px;
+}
+
+.breakdown-table td {
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.breakdown-table .num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.breakdown-table .total td {
+  font-weight: 700;
+  border-bottom: 0;
+  border-top: 2px solid var(--text);
+}
+
+.swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
