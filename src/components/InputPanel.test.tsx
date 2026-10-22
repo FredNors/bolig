@@ -22,22 +22,74 @@ test('borettslag hides dokumentavgift and shows felleskostnader', async () => {
   expect(screen.getByLabelText(t.labelCommonCosts)).toBeInTheDocument()
 })
 
-test('percent field dispatches decimal', () => {
+test('percent field dispatches decimal on blur', () => {
   const dispatch = vi.fn()
   render(<InputPanel state={DEFAULT_STATE} result={computeOwnCost(d)} dispatch={dispatch} />)
   const rate = screen.getByLabelText(t.labelRate) as HTMLInputElement
   expect(rate.value).toBe('6')
   fireEvent.change(rate, { target: { value: '5.5' } })
+  expect(dispatch).not.toHaveBeenCalled()
+  fireEvent.blur(rate)
   expect(dispatch).toHaveBeenCalledWith({ type: 'patch', patch: { rate: 0.055 } })
 })
 
-test('amount field dispatches number and startRent dispatches setStartRent', () => {
+test('Enter commits the field', () => {
   const dispatch = vi.fn()
   render(<InputPanel state={DEFAULT_STATE} result={computeOwnCost(d)} dispatch={dispatch} />)
-  fireEvent.change(screen.getByLabelText(t.labelPrice), { target: { value: '7500000' } })
+  const price = screen.getByLabelText(t.labelPrice)
+  fireEvent.change(price, { target: { value: '7500000' } })
+  fireEvent.keyDown(price, { key: 'Enter' })
   expect(dispatch).toHaveBeenCalledWith({ type: 'patch', patch: { price: 7500000 } })
-  fireEvent.change(screen.getByLabelText(t.labelStartRent), { target: { value: '40000' } })
+})
+
+test('typing a price digit by digit dispatches once, on blur, with the full value', async () => {
+  const dispatch = vi.fn()
+  render(<InputPanel state={DEFAULT_STATE} result={computeOwnCost(d)} dispatch={dispatch} />)
+  const price = screen.getByLabelText(t.labelPrice)
+  await userEvent.clear(price)
+  await userEvent.type(price, '8500000')
+  expect(dispatch).not.toHaveBeenCalled()
+  await userEvent.tab()
+  expect(dispatch).toHaveBeenCalledTimes(1)
+  expect(dispatch).toHaveBeenCalledWith({ type: 'patch', patch: { price: 8500000 } })
+})
+
+test('a cleared field restores the current value on blur without dispatching', async () => {
+  const dispatch = vi.fn()
+  render(<InputPanel state={DEFAULT_STATE} result={computeOwnCost(d)} dispatch={dispatch} />)
+  const price = screen.getByLabelText(t.labelPrice) as HTMLInputElement
+  await userEvent.clear(price)
+  expect(price.value).toBe('')
+  await userEvent.tab()
+  expect(price.value).toBe('9000000')
+  expect(dispatch).not.toHaveBeenCalled()
+})
+
+test('slider commits immediately', () => {
+  const dispatch = vi.fn()
+  render(<InputPanel state={DEFAULT_STATE} result={computeOwnCost(d)} dispatch={dispatch} />)
+  fireEvent.change(screen.getByLabelText(`${t.labelPrice} (slider)`), { target: { value: '7500000' } })
+  expect(dispatch).toHaveBeenCalledWith({ type: 'patch', patch: { price: 7500000 } })
+})
+
+test('startRent dispatches setStartRent on blur', () => {
+  const dispatch = vi.fn()
+  render(<InputPanel state={DEFAULT_STATE} result={computeOwnCost(d)} dispatch={dispatch} />)
+  const rent = screen.getByLabelText(t.labelStartRent)
+  fireEvent.change(rent, { target: { value: '40000' } })
+  fireEvent.blur(rent)
   expect(dispatch).toHaveBeenCalledWith({ type: 'setStartRent', value: 40000 })
+})
+
+test('shows a hint when equity exceeds price', () => {
+  const s = reduce(DEFAULT_STATE, { type: 'patch', patch: { price: 1_000_000 } })
+  render(<InputPanel state={s} result={computeOwnCost(s.inputs)} dispatch={() => {}} />)
+  expect(screen.getByText(t.equityCapped)).toBeInTheDocument()
+})
+
+test('no equity hint by default', () => {
+  render(<InputPanel state={DEFAULT_STATE} result={computeOwnCost(d)} dispatch={() => {}} />)
+  expect(screen.queryByText(t.equityCapped)).toBeNull()
 })
 
 test('taxGain checkbox dispatches patch', async () => {
@@ -51,4 +103,15 @@ test('liquidity box shows payment and cash needed', () => {
   render(<InputPanel state={DEFAULT_STATE} result={computeOwnCost(d)} dispatch={() => {}} />)
   expect(screen.getByText('41 256 kr')).toBeInTheDocument()
   expect(screen.getByText('2 231 090 kr')).toBeInTheDocument()
+})
+
+test('a value the reducer clamps back to the current one is not left in the field', () => {
+  const s = reduce(DEFAULT_STATE, { type: 'patch', patch: { years: 10 } })
+  const dispatch = vi.fn()
+  const { rerender } = render(<InputPanel state={s} result={computeOwnCost(s.inputs)} dispatch={dispatch} />)
+  const years = screen.getByLabelText(t.labelYears) as HTMLInputElement
+  fireEvent.change(years, { target: { value: '99' } })
+  fireEvent.blur(years)
+  rerender(<InputPanel state={reduce(s, dispatch.mock.calls[0][0])} result={computeOwnCost(s.inputs)} dispatch={dispatch} />)
+  expect(years.value).toBe('10')
 })

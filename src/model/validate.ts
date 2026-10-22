@@ -46,6 +46,5 @@ export function clampInputs(inputs: Inputs): Inputs {
     if (INTEGER_KEYS.has(key)) v = Math.round(v)
     out[key] = v
   }
-  if (out.equity > out.price) out.equity = out.price
   return out
 }

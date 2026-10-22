@@ -8,8 +8,8 @@ test('clamps years to 1..10 and rounds to integer', () => {
   expect(clampInputs({ ...d, years: 2.4 }).years).toBe(2)
 })
 
-test('equity cannot exceed price', () => {
-  expect(clampInputs({ ...d, price: 5e6, equity: 6e6 }).equity).toBe(5e6)
+test('equity above price is kept as typed (the model caps it)', () => {
+  expect(clampInputs({ ...d, price: 5e6, equity: 6e6 }).equity).toBe(6e6)
 })
 
 test('rate is clamped to its limit', () => {

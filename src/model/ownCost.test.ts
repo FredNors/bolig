@@ -68,3 +68,10 @@ test('loan repaid before sale stops accruing interest', () => {
   near(r.totalInterest, oneYear.totalInterest, 1)
   near(r.principalPaid, 7000000, 1)
 })
+
+test('equity above price is capped in the model without a loan going negative', () => {
+  const r = computeOwnCost({ ...d, price: 5_000_000, equity: 6_000_000 })
+  expect(r.pmt).toBe(0)
+  expect(r.totalInterest).toBe(0)
+  near(r.cashNeeded, 5_000_000 + 5_000_000 * 0.025 + 1090 + 5000)
+})

@@ -32,6 +32,7 @@ export const t = {
   labelRentGrowth: 'Årlig leieøkning',
   labelStartRent: 'Leie per måned (år 1)',
   taxGainLabel: 'Skattlegg gevinst ved salg (22 %)',
+  equityCapped: 'Egenkapitalen er høyere enn kjøpesummen; bare kjøpesummen brukes.',
 
   unitKr: 'kr',
   unitPct: '%',

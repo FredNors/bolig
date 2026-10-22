@@ -1,4 +1,4 @@
-import { useId } from 'react'
+import { useEffect, useId, useState } from 'react'
 
 export type Unit = 'kr' | '%' | 'år'
 
@@ -13,14 +13,28 @@ export interface NumberFieldProps {
   slider?: boolean
 }
 
-/** A labelled number input (display units) with an optional slider. */
+const parse = (raw: string): number | null => {
+  const n = Number(raw)
+  return raw.trim() === '' || !Number.isFinite(n) ? null : n
+}
+
+/**
+ * A labelled number input (display units) with an optional slider.
+ * The text input keeps a local draft and commits on blur or Enter, so intermediate
+ * keystrokes never reach the model; the slider commits on every change.
+ */
 export function NumberField({ label, value, min, max, step, unit, onChange, slider }: NumberFieldProps) {
   const id = useId()
-  const handle = (raw: string) => {
-    const n = Number(raw)
-    if (raw.trim() === '' || !Number.isFinite(n)) return
-    onChange(n)
+  const [draft, setDraft] = useState(String(value))
+  useEffect(() => setDraft(String(value)), [value])
+
+  const commit = () => {
+    const n = parse(draft)
+    if (n !== null && n !== value) onChange(n)
+    // Reset to the current prop; if the commit changes it, the effect above re-syncs.
+    setDraft(String(value))
   }
+
   return (
     <div className="field">
       <label htmlFor={id}>{label}</label>
@@ -29,11 +43,15 @@ export function NumberField({ label, value, min, max, step, unit, onChange, slid
           id={id}
           type="number"
           inputMode="decimal"
-          value={value}
+          value={draft}
           min={min}
           max={max}
           step={step}
-          onChange={(e) => handle(e.target.value)}
+          onChange={(e) => setDraft(e.target.value)}
+          onBlur={commit}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') commit()
+          }}
         />
         <span className="unit">{unit}</span>
       </div>
@@ -45,7 +63,10 @@ export function NumberField({ label, value, min, max, step, unit, onChange, slid
           min={min}
           max={max}
           step={step}
-          onChange={(e) => handle(e.target.value)}
+          onChange={(e) => {
+            const n = parse(e.target.value)
+            if (n !== null) onChange(n)
+          }}
         />
       )}
     </div>

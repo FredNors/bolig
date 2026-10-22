@@ -87,6 +87,7 @@ export function InputPanel({ state, result, dispatch }: InputPanelProps) {
         <legend>{t.groupHome}</legend>
         {field('price', true)}
         {field('equity', true)}
+        {inputs.equity > inputs.price && <p className="field-hint">{t.equityCapped}</p>}
         {field('rate', true)}
         {field('loanYears')}
         {field('taxRate')}

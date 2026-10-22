@@ -9,12 +9,13 @@ const geometricSum = (base: number, growth: number, terms: number): number => {
 
 export function computeOwnCost(inputs: Inputs): OwnCostResult {
   const {
-    ownershipType, price, equity, rate, loanYears, taxRate, years, priceGrowth,
+    ownershipType, price, equity: rawEquity, rate, loanYears, taxRate, years, priceGrowth,
     inflation, altReturn, docFeeRate, registrationFee, bankFee, sellCostRate,
     maintenanceRate, insurance, municipalFees, propertyTax, commonCosts, taxGain, rentGrowth,
   } = inputs
 
   const effectiveDocFeeRate = ownershipType === 'borettslag' ? 0 : docFeeRate
+  const equity = Math.min(rawEquity, price) // more equity than price is simply unused
   const loan = price - equity
   const rm = (1 + rate) ** (1 / 12) - 1
   const n = loanYears * 12

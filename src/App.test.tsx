@@ -14,7 +14,9 @@ test('changing startRent recolours the selected cell', () => {
   render(<App />)
   const cell = () => screen.getByRole('button', { pressed: true })
   expect(cell().getAttribute('data-kind')).toBe('rent')
-  fireEvent.change(screen.getByLabelText(t.labelStartRent), { target: { value: '60000' } })
+  const rent = screen.getByLabelText(t.labelStartRent)
+  fireEvent.change(rent, { target: { value: '60000' } })
+  fireEvent.blur(rent)
   expect(cell().getAttribute('data-kind')).toBe('buy')
 })
 
