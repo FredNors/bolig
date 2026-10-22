@@ -43,8 +43,8 @@ export function Matrix({ state, dispatch }: MatrixProps) {
                 {t.matrixYearsAxis} ↓ / {t.matrixGrowthAxis} →
               </th>
               {MATRIX_GROWTHS.map((g) => (
-                <th key={g} scope="col">
-                  {formatPct(g, 1)}
+                <th key={g} scope="col" className={g === 0 ? 'zero' : undefined}>
+                  {formatPct(g, 0)}
                 </th>
               ))}
             </tr>
@@ -60,7 +60,7 @@ export function Matrix({ state, dispatch }: MatrixProps) {
                   const selected = inputs.years === years && Math.abs(inputs.priceGrowth - growth) < EPS
                   const hovered = hover?.yi === yi && hover?.gi === gi
                   return (
-                    <td key={growth} className={gi >= 7 ? 'tip-left' : undefined}>
+                    <td key={growth} className={[gi >= 7 ? 'tip-left' : '', growth === 0 ? 'zero' : ''].join(' ').trim() || undefined}>
                       <button
                         type="button"
                         aria-pressed={selected}

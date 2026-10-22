@@ -1,6 +1,6 @@
 # Leie eller kjøpe?
 
-En liten simulator som viser ved hvilken husleie det koster det samme å leie som å kjøpe bolig i Norge (utgangspunkt Bærum). Juster forutsetningene i venstre panel, og se break-even-leie per måned i en matrise over eietid og årlig prisvekst, en nedbrytning av eiekostnaden for valgt celle, og hvilken prisvekst en gitt leie krever.
+En liten simulator som viser ved hvilken husleie det koster det samme å leie som å kjøpe bolig i Norge (utgangspunkt Bærum). Juster forutsetningene i venstre panel, og se break-even-leie per måned i en matrise over eietid (1 til 10 år) og årlig prisvekst (−5 % til +5 %), en nedbrytning av eiekostnaden for valgt celle, og hvilken prisvekst en gitt leie krever.
 
 Alle valg ligger i URL-en, så et scenario kan deles som lenke.
 
