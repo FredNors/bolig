@@ -24,7 +24,7 @@ export default function App() {
   }
 
   return (
-    <div className="page">
+    <div className={panelOpen ? 'page panel-open' : 'page'}>
       <header className="page-header">
         <h1>{t.title}</h1>
         <p className="subtitle">{t.subtitle}</p>
