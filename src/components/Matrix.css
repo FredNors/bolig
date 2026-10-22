@@ -44,8 +44,23 @@
 }
 
 .matrix th.corner {
-  text-align: left;
+  text-align: right;
   font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding-right: 8px;
+}
+
+.matrix .axis-row td {
+  padding: 0;
+}
+
+.matrix th.axis-title {
+  text-align: center;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0 0 2px;
 }
 
 .matrix th[scope='row'] {

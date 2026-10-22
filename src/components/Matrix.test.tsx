@@ -78,3 +78,13 @@ test('negative growth columns exist and are redder than zero growth', () => {
   expect(neg).toHaveAccessibleName(`3 år, −5,0 %: 86 132 NOK, ${t.cellRent}`)
   expect(neg.getAttribute('data-kind')).toBe('rent')
 })
+
+test('axis titles are compact: growth title spans the columns, corner holds only the years title', () => {
+  render(<Matrix state={DEFAULT_STATE} dispatch={() => {}} />)
+  const growthTitle = screen.getByText(t.matrixGrowthAxis)
+  expect(growthTitle.tagName).toBe('TH')
+  expect(growthTitle).toHaveAttribute('colspan', '11')
+  const corner = screen.getByText(t.matrixYearsAxis)
+  expect(corner.tagName).toBe('TH')
+  expect(corner.textContent).toBe(t.matrixYearsAxis)
+})

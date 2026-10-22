@@ -38,9 +38,15 @@ export function Matrix({ state, dispatch }: MatrixProps) {
       <div className="matrix-scroll">
         <table>
           <thead>
+            <tr className="axis-row">
+              <td aria-hidden="true" />
+              <th scope="colgroup" colSpan={MATRIX_GROWTHS.length} className="axis-title">
+                {t.matrixGrowthAxis}
+              </th>
+            </tr>
             <tr>
               <th scope="col" className="corner">
-                {t.matrixYearsAxis} ↓ / {t.matrixGrowthAxis} →
+                {t.matrixYearsAxis}
               </th>
               {MATRIX_GROWTHS.map((g) => (
                 <th key={g} scope="col" className={g === 0 ? 'zero' : undefined}>
